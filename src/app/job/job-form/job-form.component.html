@@ -1,0 +1,53 @@
+<div class="alert alert-danger" role="alert" *ngIf="isSubmitted && error">
+    {{error}}
+  </div>
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" 
+            [(ngModel)]="job.name" #name="ngModel" required>
+        <label for="name">Name</label>
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 
+                [(ngModel)]="job.description" #description="ngModel" required></textarea>
+        <label for="description">Description</label>
+        <div [hidden]="description.valid || description.pristine" class="alert alert-danger">Description is required</div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="location" name="location" placeholder="Location" 
+            [(ngModel)]="job.location" #location="ngModel">
+        <label for="location">Location</label>
+    </div>
+    <div class="row g-1">
+        <div class="form-floating mb-3 me-2 col-md">
+            <input type="text" class="form-control" id="type" name="type" placeholder="Contract type" 
+                [(ngModel)]="job.contractType" #type="ngModel">
+            <label for="type">Contract type</label>
+        </div>
+        <div class="form-floating mb-3 col-md">
+            <input type="text" class="form-control" id="salary" name="salary" placeholder="Salary" 
+                [(ngModel)]="job.salary" #type="ngModel">
+            <label for="salary">Salary</label>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" [(ngModel)]="job.sectorId" #sector="ngModel" id="sector" name="sector">
+            <option value="0" [selected]="isAdd">None</option>
+            <option *ngFor="let s of sectors" [ngValue]="s.id" [selected]="job.sectorId == s.id">{{ s.name }}</option>
+        </select>
+        <label for="sector">Sector</label>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" multiple > <!--(change)="setSelected($event.target)""-->
+            <option *ngFor="let c of categories" [ngValue]="c">{{ c.name }}</option>
+        </select>
+        <!--<select class="form-select" [(ngModel)]="selectedCategories" #categories="ngModel" id="categories" name="categories" multiple>
+            <option value="0" [selected]="isAdd">None</option>
+            <option *ngFor="let c of categories" [ngValue]="c" selected>{{ c.name }}</option>
+        </select>-->
+        <label for="categories">Categories</label>
+    </div>
+    <button type="submit" class="btn btn-primary" *ngIf="isAdd" [disabled]="!categoryForm.form.valid || isSubmitted">Add</button>
+    <button type="submit" class="btn btn-primary" *ngIf="isEdit" [disabled]="!categoryForm.form.valid || isSubmitted">Save</button>
+  </form>

@@ -1,0 +1,23 @@
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
+  <button type="button" class="btn btn-success addBtn" (click)="add()"><i class="fas fa-plus"></i> Add new sector</button>
+  <table class="table" *ngIf="sectors && sectors.length > 0">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let s of sectors">
+      <th scope="row">{{s.id}}</th>
+      <td>{{s.name}}</td>
+      <td>
+        <button type="button" class="btn btn-success me-1" (click)="edit(s.id)"><i class="fas fa-edit"></i></button>
+        <button type="button" class="btn btn-danger" (click)="delete(s.id)"><i class="far fa-trash-alt"></i></button>
+      </td>
+    </tr>
+    </tbody>
+  </table>

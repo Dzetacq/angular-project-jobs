@@ -1,0 +1,27 @@
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let u of users; index as i">
+            <tr [class.fw-bold] = "u.id === user.id" data-bs-toggle="collapse" attr.data-bs-target="#collapse{{ i }}" style="cursor: pointer;">
+                <td>{{ u.userName }}</td>
+                <td><i *ngIf="u.isAdmin" class="fa fa-check"></i></td>
+                <td>
+                    <button type="button" class="btn btn-danger" (click)="delete(u.id)"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            <tr class="collapse" [id]="'collapse'+i">
+                <td colspan="3" class="ps-4" >{{ u.firstname + " " + u.lastname }}</td>
+            </tr>
+        </ng-container>
+        
+    </tbody>
+</table>

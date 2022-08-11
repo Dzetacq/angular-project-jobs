@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navDropdown" (click)="hide=!hide">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" [class.show]="!hide" id="navDropdown" (click)="hide=true">
+            <ul ngbNav [activeId]="route.fragment | async" class="navbar-nav border-bottom-0">
+                <li [ngbNavItem]="link.url" *ngFor="let link of links" class="nav-item">
+                    <a ngbNavLink [routerLink]="link.url" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }" class="nav-link">{{ link.title }} </a>
+                </li>
+                <li *ngIf="auth.getUser()?.isSuper" class="nav-item">
+                    <a class="nav-link" routerLink="/super/">Super admin</a>
+                </li>
+                <li *ngIf="auth.getUser()?.isAdmin && !auth.getUser()?.isSuper" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                        Your companies
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let company of companies"><a class="dropdown-item" [routerLink]="'company/' + company.id">{{ company.name }}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a class="nav-link" routerLink="/login">Login</a>
+                </li>
+                <li *ngIf="!auth.isLoggedIn()" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a class="nav-link" routerLink="/register">Register</a>
+                </li>
+                <li *ngIf="auth.isLoggedIn()" class="nav-item mt-2">
+                    <a class="nav-link d-inline p-0" routerLink="/account">{{auth.getUser()?.firstname ?? auth.getUser()?.userName}}'s account</a>
+                </li>
+                <li *ngIf="auth.isLoggedIn()" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a class="nav-link" routerLink="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,4 @@
+<h1 *ngIf="isSeparate">Company Overview</h1>
+<div class="row">
+    <app-company *ngFor="let company of (companies$ | async)" [company]="company" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 p-2"></app-company>
+</div>

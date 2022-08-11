@@ -1,0 +1,43 @@
+<article *ngIf="company"  [class.card]="!isDetail">
+    <div class="card-body">
+        <h3 *ngIf="!isDetail">{{ company.name }}</h3>
+        <h1 *ngIf="isDetail">{{ company.name }}</h1>
+        <a *ngIf="!isDetail" ngbNavLink routerLinkActive="active" [routerLink]="'/company/' + company.id" class="stretched-link"></a>
+        <p *ngIf="!isDetail">Number of jobs: {{ company.jobCount }}</p>
+        <div *ngIf="isDetail">
+            <p>
+                Admin: {{ company.admin ? (company.admin.firstname + " " + company.admin.lastname) : "none" }}  
+                <button *ngIf="user.isSuper" type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#adminEdit">
+                    <i class="fas fa-edit"></i> Change admin
+                </button>
+            </p>
+            <h2 type="button" data-bs-toggle="collapse" data-bs-target="#jobs">Job list</h2>
+            <div class="collapse show" id="jobs">
+                <app-job-overview [companyId]="company.id" [isSeparate]="false"></app-job-overview>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="adminEdit" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLabel">Change Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form (ngSubmit)="onSubmit()" #adminForm="ngForm">
+                    <div class="modal-body form-group mb-2">
+                        <label for="user">User: </label>
+                        <select class="form-select" [(ngModel)]="company.adminId" #admin="ngModel" id="admin" name="admin" required>
+                            <option value="" selected>None</option>
+                            <option *ngFor="let u of users" [ngValue]="u.id" [selected]="u.id == company.adminId">{{ u.userName }}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!adminForm.form.valid || isSubmitted">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</article>

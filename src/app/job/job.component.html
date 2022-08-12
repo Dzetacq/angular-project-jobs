@@ -4,10 +4,51 @@
 </div>
 <article *ngIf="job"  [class.card]="!isDetail">
     <div class="card-body">
-        <h2>{{ job.name }}</h2>
-        <div *ngIf="isDetail && (user.isSuper || user.id == job.company?.adminId)">
-            <button type="button" class="btn btn-success me-2" (click)="edit(job.id)"><i class="fas fa-edit"></i> Edit</button>
-            <button type="button" class="btn btn-danger" (click)="delete(job.id)"><i class="far fa-trash-alt"></i> Delete</button>
+        <h2 *ngIf="!isDetail">{{ job.name }}</h2>
+        <h1 *ngIf="isDetail">{{ job.name }}</h1>
+        <ng-container *ngIf="isDetail && user.id">
+            <div *ngIf="user.isSuper || user.id == job.company?.adminId; else apply" class="my-3">
+                <button type="button" class="btn btn-success me-2" (click)="edit(job.id)"><i class="fas fa-edit"></i> Edit</button>
+                <button type="button" class="btn btn-danger" (click)="delete(job.id)"><i class="far fa-trash-alt"></i> Delete</button>
+            </div>
+            <ng-template #apply>
+                <button type="button" class="btn btn-success" (click)="applyJob(job.id)"><i class="far fa-envelope-open"></i> Apply</button>
+            </ng-template>
+        </ng-container>
+        
+        <div>
+            <span class="badge rounded-pill bg-primary" *ngFor="let c of job.categories">{{ c.name }}</span>
+        </div>
+        <div *ngIf="isDetail">
+            <h2 type="button" data-bs-toggle="collapse" data-bs-target="#company">Company</h2>
+            <div class="collapse" id="company">
+                <app-company [company]="job.company!"></app-company>
+            </div>
+            <div *ngIf="job.contractType || job.location || job.salary || job.sector">
+                <h2 type="button" data-bs-toggle="collapse" data-bs-target="#details">Details</h2>
+                <div class="collapse" id="details">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr *ngIf="job.contractType">
+                                <th scope="row" class="col-md-3">Contract type: </th>
+                                <td>{{ job.contractType }}</td>
+                            </tr>
+                            <tr *ngIf="job.location">
+                                <th scope="row">Location: </th>
+                                <td>{{ job.location }}</td>
+                            </tr>
+                            <tr *ngIf="job.salary">
+                                <th scope="row">Salary: </th>
+                                <td>{{ job.salary }}</td>
+                            </tr>
+                            <tr *ngIf="job.sector">
+                                <th scope="row">Sector: </th>
+                                <td>{{ job.sector.name }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <p>{{ job.description ? (isDetail? job.description : (job.description | shortenContent : 250)) : "" }}</p>
        <a *ngIf="!isDetail" ngbNavLink [routerLink]="'/job/' + job.id" href="/" class="stretched-link"></a>

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { delay, Subscription } from 'rxjs';
 import { AuthService } from '../user/auth/auth.service';
 import { User } from '../user/user';
 import { Job } from './job';
@@ -38,6 +38,10 @@ export class JobComponent implements OnInit, OnDestroy {
       next: () => this.location.back(),
       error: e => this.error = e.message
     }));
+  }
+
+  applyJob(id: number) {
+    this.router.navigate(['job/'], {state: {id: id, mode: 'edit'}});
   }
 
 }

@@ -15,6 +15,10 @@
         <div [hidden]="description.valid || description.pristine" class="alert alert-danger">Description is required</div>
     </div>
     <div class="form-floating mb-3">
+        <ng-multiselect-dropdown [settings]="dropdownSettings" placeholder="Categories" [data]="categories" name="categories"
+        [(ngModel)]="job.categories"></ng-multiselect-dropdown>
+    </div>
+    <div class="form-floating mb-3">
         <input type="text" class="form-control" id="location" name="location" placeholder="Location" 
             [(ngModel)]="job.location" #location="ngModel">
         <label for="location">Location</label>
@@ -25,11 +29,11 @@
                 [(ngModel)]="job.contractType" #type="ngModel">
             <label for="type">Contract type</label>
         </div>
-        <div class="form-floating mb-3 col-md">
+        <!--<div class="form-floating mb-3 col-md">
             <input type="text" class="form-control" id="salary" name="salary" placeholder="Salary" 
                 [(ngModel)]="job.salary" #type="ngModel">
             <label for="salary">Salary</label>
-        </div>
+        </div>-->
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" [(ngModel)]="job.sectorId" #sector="ngModel" id="sector" name="sector">
@@ -37,16 +41,6 @@
             <option *ngFor="let s of sectors" [ngValue]="s.id" [selected]="job.sectorId == s.id">{{ s.name }}</option>
         </select>
         <label for="sector">Sector</label>
-    </div>
-    <div class="form-floating mb-3">
-        <select class="form-select" multiple > <!--(change)="setSelected($event.target)""-->
-            <option *ngFor="let c of categories" [ngValue]="c">{{ c.name }}</option>
-        </select>
-        <!--<select class="form-select" [(ngModel)]="selectedCategories" #categories="ngModel" id="categories" name="categories" multiple>
-            <option value="0" [selected]="isAdd">None</option>
-            <option *ngFor="let c of categories" [ngValue]="c" selected>{{ c.name }}</option>
-        </select>-->
-        <label for="categories">Categories</label>
     </div>
     <button type="submit" class="btn btn-primary" *ngIf="isAdd" [disabled]="!categoryForm.form.valid || isSubmitted">Add</button>
     <button type="submit" class="btn btn-primary" *ngIf="isEdit" [disabled]="!categoryForm.form.valid || isSubmitted">Save</button>

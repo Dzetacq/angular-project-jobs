@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../user/auth/auth.service';
-import { User } from '../user/user';
+import { AuthService } from 'src/app/user/auth/auth.service';
+import { User } from 'src/app/user/user';
 import { Company } from './company';
 import { CompanyService } from './company.service';
 import { EditCompany } from './edit-company';

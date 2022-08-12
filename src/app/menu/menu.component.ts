@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Company } from '../company/company';
-import { CompanyService } from '../company/company.service';
+import { Company } from '../job/company/company';
+import { CompanyService } from '../job/company/company.service';
 import { AuthService } from '../user/auth/auth.service';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Company } from 'src/app/company/company';
-import { CompanyService } from 'src/app/company/company.service';
 import { AuthService } from 'src/app/user/auth/auth.service';
 import { User } from 'src/app/user/user';
+import { Company } from '../company/company';
+import { CompanyService } from '../company/company.service';
 import { Job } from '../job'
 import { JobService } from '../job.service'
 

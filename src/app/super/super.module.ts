@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './super-routing.module';
 import { SuperComponent } from './super.component';
-import { CompanyModule } from '../company/company.module';
 import { CategoryModule } from '../category/category.module';
 import { SectorModule } from '../sector/sector.module';
 import { UserModule } from '../user/user.module';
+import { JobModule } from '../job/job.module';
 
 
 
@@ -16,7 +16,7 @@ import { UserModule } from '../user/user.module';
   imports: [
     AdminRoutingModule,
     CommonModule, 
-    CompanyModule,
+    JobModule,
     CategoryModule,
     SectorModule,
     UserModule

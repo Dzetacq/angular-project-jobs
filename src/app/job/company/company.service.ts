@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Company } from './company';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { api } from '../../global';
+import { api } from '../../../global';
 import { EditCompany } from './edit-company';
 
 @Injectable({

@@ -4,8 +4,8 @@ import { UserComponent } from './user.component';
 import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from '@angular/forms';
 import { UserListComponent } from './user-list/user-list.component';
-import { CompanyModule } from '../company/company.module';
 import { RouterModule } from '@angular/router';
+import { JobModule } from '../job/job.module';
 
 
 
@@ -19,7 +19,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     CommonModule,
     FormsModule,
-    CompanyModule
+    JobModule
   ],
   exports: [
     UserComponent,

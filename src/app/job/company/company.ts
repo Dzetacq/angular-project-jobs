@@ -1,5 +1,6 @@
-import { Job } from "../job/job";
-import { User } from "../user/user";
+import { User } from "src/app/user/user";
+import { Job } from "../job";
+
 
 export interface Company {
     id: number;

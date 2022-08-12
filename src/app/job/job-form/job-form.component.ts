@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/category/category.service';
 import { Sector } from 'src/app/sector/sector';
 import { SectorService } from 'src/app/sector/sector.service';
 import { Job } from '../job';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { JobService } from '../job.service';
 
 @Component({
@@ -21,11 +22,11 @@ export class JobFormComponent implements OnInit, OnDestroy {
   isSubmitted: boolean = false;
   sectors: Sector[] = [];
   categories: Category[] = [];
-  selectedCategories: any;
   error: string = '';
   isAdd: boolean = false;
   isEdit: boolean = false;
   subs: Subscription[] = [];
+  dropdownSettings: IDropdownSettings = {};
 
   constructor(private service: JobService, private router: Router, 
       private sectorService: SectorService, private categoryService: CategoryService) {
@@ -41,6 +42,9 @@ export class JobFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(this.sectorService.getSectors().subscribe(r => this.sectors = r));
     this.subs.push(this.categoryService.getCategories().subscribe(r => this.categories = r));
+    this.dropdownSettings = {
+      idField: 'id', textField: 'name',
+    }
   }
 
   ngOnDestroy(): void {
@@ -49,7 +53,7 @@ export class JobFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.isSubmitted = true;
-    let observable = new Observable;
+    let observable = new Observable<Job>();
     if (this.isAdd) {
       this.job.companyId = this.companyId;
       observable = this.service.postJob(this.job);
@@ -58,7 +62,7 @@ export class JobFormComponent implements OnInit, OnDestroy {
       observable = this.service.putJob(this.id, this.job)
     }
     this.subs.push(observable.subscribe({
-        next: () => this.router.navigateByUrl("/job/" + this.id),
+        next: r => this.router.navigateByUrl("/job/" + (this.isAdd ? r.id : this.id)),
         error: e => this.error = e.message
     }));
   }

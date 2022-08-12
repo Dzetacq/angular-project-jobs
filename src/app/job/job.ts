@@ -1,6 +1,6 @@
 import { Sector } from "../sector/sector";
-import { Company } from '../company/company'
 import { Category } from "../category/category";
+import { Company } from "./company/company";
 
 export interface Job {
     id: number;

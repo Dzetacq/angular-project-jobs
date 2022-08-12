@@ -1,4 +1,9 @@
-<h1 *ngIf="isSeparate">Job Overview</h1>
+<div *ngIf="isSeparate">
+    <h1>Job Overview</h1>
+    <div id="search-bar">
+        
+    </div>
+</div>
 <p><button *ngIf="company.id != 0 && (user.isSuper || user.id == company.adminId)" type="button" class="btn btn-success" (click)="add()">
     <i class="fas fa-edit"></i> Add job
 </button></p>

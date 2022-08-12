@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Company } from '../company/company';
-import { CompanyService } from '../company/company.service';
+import { CompanyService } from '../job/company/company.service';
 import { AuthService } from './auth/auth.service';
 import { User } from './user';
 

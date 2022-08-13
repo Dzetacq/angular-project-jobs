@@ -1,3 +1,4 @@
+import { Application } from "../job/application/application";
 import { Company } from "../job/company/company";
 
 
@@ -14,5 +15,6 @@ export interface User {
     phoneNumber?: string;
     address?: string;
     linkedIn?: string;
-    companies: Company[]
+    companies: Company[];
+    applications?: Application[];
 }

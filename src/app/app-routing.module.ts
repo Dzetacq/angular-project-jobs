@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './user/auth/auth.component';
 import { UserComponent } from './user/user.component';
 import { CompanyOverviewComponent } from './job/company/company-overview/company-overview.component';
+import { CompanyFormComponent } from './job/company/company-form/company-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: AuthComponent},
   { path: 'logout', component: AuthComponent},
   { path: 'account', component: UserComponent},
+  { path: 'user/:id', component: UserComponent},
   { path: 'account/edit', component: AuthComponent},
   { path: 'company', component: CompanyOverviewComponent},
   { path: 'company/:id', component: CompanyDetailComponent},

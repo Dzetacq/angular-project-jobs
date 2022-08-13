@@ -11,6 +11,10 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CompanyComponent } from './company/company.component';
 import { CompanyOverviewComponent } from './company/company-overview/company-overview.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { ApplicationModule } from './application/application.module';
+import { ApplicationComponent } from './application/application.component';
+import { ApplicationListComponent } from './application/application-list/application-list.component';
+import { CompanyFormComponent } from './company/company-form/company-form.component';
 
 
 
@@ -22,20 +26,24 @@ import { CompanyDetailComponent } from './company/company-detail/company-detail.
     JobFormComponent,
     CompanyComponent,
     CompanyDetailComponent,
-    CompanyOverviewComponent
+    CompanyOverviewComponent,
+    CompanyFormComponent
   ],
   imports: [
     CommonModule,
     JobRoutingModule,
     SharedModule,
     FormsModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    ApplicationModule
   ],
   exports: [
     JobComponent,
     JobOverviewComponent,
     CompanyComponent,
-    CompanyOverviewComponent
+    CompanyOverviewComponent,
+    ApplicationComponent,
+    ApplicationListComponent
   ]
 })
 export class JobModule { }

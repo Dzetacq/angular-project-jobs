@@ -1,7 +1,7 @@
 <h1 *ngIf="isLogin">Login</h1>
 <h1 *ngIf="isRegister">Register</h1>
 <h1 *ngIf="isEdit">Edit account</h1>
-<div class="alert alert-danger" role="alert" *ngIf="error">
+<div class="alert alert-danger mt-3" role="alert" *ngIf="error">
   {{error}}
 </div>
 <form (ngSubmit)="onSubmit()" #authForm="ngForm">

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,7 +21,8 @@ export class CompanyComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   isSubmitted: boolean = false;
   editCompany: EditCompany = {id: 0}
-  constructor(private auth: AuthService, private companyService: CompanyService, private router: Router) { }
+  constructor(private auth: AuthService, private companyService: CompanyService, 
+    private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.user = this.auth.getUser() ?? this.user;
@@ -41,5 +43,11 @@ export class CompanyComponent implements OnInit, OnDestroy {
     this.subs.push(this.companyService.putCompany(this.company.id, this.editCompany).subscribe(r => {
       window.location.reload();
     }));
+  }
+
+  delete(id: number) {
+    this.subs.push(this.companyService.deleteCompany(id).subscribe(
+      () => this.router.navigate(['/super'])
+    ));
   }
 }

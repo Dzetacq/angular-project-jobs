@@ -1,5 +1,8 @@
 $base-color: #337ab7;
 $disable-background-color: #eceeef;
+#overviewCategories .multiselect-dropdown .dropdown-btn .selected-item {
+  display: none;
+}
 .multiselect-dropdown {
   position: relative;
   width: 100%;

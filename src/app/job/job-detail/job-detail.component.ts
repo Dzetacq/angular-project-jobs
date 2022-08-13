@@ -20,7 +20,7 @@ export class JobDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(this.jobService.getJobById(
         +(this.route.snapshot.paramMap.get('id') ?? 0)
-      ).subscribe(r => {this.job = r; this.company = r.company; console.log(this.job)}))
+      ).subscribe(r => {this.job = r; this.company = r.company}))
   }
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());

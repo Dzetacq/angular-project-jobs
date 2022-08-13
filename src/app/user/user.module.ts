@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import { UserListComponent } from './user-list/user-list.component';
 import { RouterModule } from '@angular/router';
 import { JobModule } from '../job/job.module';
+import { ApplicationModule } from '../job/application/application.module';
 
 
 

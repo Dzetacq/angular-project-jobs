@@ -7,6 +7,6 @@ export interface Company {
     name: string;
     adminId: string;
     admin?: User;
-    jobCount: number;
-    jobs: Job[];
+    jobCount?: number;
+    jobs?: Job[];
 }

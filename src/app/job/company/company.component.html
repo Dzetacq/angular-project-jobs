@@ -5,12 +5,13 @@
         <a *ngIf="!isDetail" ngbNavLink routerLinkActive="active" [routerLink]="'/company/' + company.id" class="stretched-link"></a>
         <p *ngIf="!isDetail">Number of jobs: {{ company.jobCount }}</p>
         <div *ngIf="isDetail">
-            <p>
-                Admin: {{ company.admin ? (company.admin.firstname + " " + company.admin.lastname) : "none" }}  
-                <button *ngIf="user.isSuper" type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#adminEdit">
-                    <i class="fas fa-edit"></i> Change admin
-                </button>
-            </p>
+            <button *ngIf="user.isSuper || user.id == company.adminId" type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#adminEdit">
+                <i class="fas fa-edit"></i> Edit company
+            </button>
+            <button *ngIf="user.isSuper" type="button" class="btn btn-danger m-2" (click)="delete(company.id)">
+                <i class="fas fa-edit"></i> Delete company
+            </button>
+            <p>Admin: {{ company.admin ? (company.admin.firstname + " " + company.admin.lastname) : "none" }}</p>
             <h2 type="button" data-bs-toggle="collapse" data-bs-target="#jobs">Job list</h2>
             <div class="collapse show" id="jobs">
                 <app-job-overview [companyId]="company.id" [isSeparate]="false"></app-job-overview>
@@ -21,14 +22,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editLabel">Change Admin</h5>
+                    <h5 class="modal-title" id="editLabel">Edit company</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form (ngSubmit)="onSubmit()" #adminForm="ngForm">
                     <div class="modal-body form-group mb-2">
-                        <label for="user">User: </label>
-                        <select class="form-select" [(ngModel)]="company.adminId" #admin="ngModel" id="admin" name="admin" required>
-                            <option value="" selected>None</option>
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" [(ngModel)]="company.name"
+                                #name="ngModel" required>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger mt-3">Name is required</div>
+                    </div>
+                    <div *ngIf="user.isSuper" class="modal-body form-group mb-2">
+                        <label for="user">Admin: </label>
+                        <select class="form-select" [(ngModel)]="company.adminId" #admin="ngModel" id="admin" name="admin">
+                            <option value="" [selected]="1 == 1">None</option>
                             <option *ngFor="let u of users" [ngValue]="u.id" [selected]="u.id == company.adminId">{{ u.userName }}</option>
                         </select>
                     </div>

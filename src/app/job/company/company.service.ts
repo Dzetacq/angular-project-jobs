@@ -24,7 +24,15 @@ export class CompanyService {
     return this.http.get<Company[]>(this.url + "user/" + id);
   }
 
+  postCompany(company: EditCompany) : Observable<Company> {
+    return this.http.post<Company>(this.url, company)
+  }
+
   putCompany(id: number, company: EditCompany) : Observable<Company> {
     return this.http.put<Company>(this.url + id, company)
+  }
+
+  deleteCompany(id: number) : Observable<Company> {
+    return this.http.delete<Company>(this.url + id);
   }
 }

@@ -1,4 +1,4 @@
-<div class="alert alert-danger" role="alert" *ngIf="isSubmitted && error">
+<div class="alert alert-danger mt-3" role="alert" *ngIf="isSubmitted && error">
     {{error}}
   </div>
   <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
@@ -6,13 +6,13 @@
         <input type="text" class="form-control" id="name" name="name" placeholder="Name" 
             [(ngModel)]="job.name" #name="ngModel" required>
         <label for="name">Name</label>
-        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name is required</div>
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger mt-3">Name is required</div>
     </div>
     <div class="form-floating mb-3">
         <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 
                 [(ngModel)]="job.description" #description="ngModel" required></textarea>
         <label for="description">Description</label>
-        <div [hidden]="description.valid || description.pristine" class="alert alert-danger">Description is required</div>
+        <div [hidden]="description.valid || description.pristine" class="alert alert-danger mt-3">Description is required</div>
     </div>
     <div class="form-floating mb-3">
         <ng-multiselect-dropdown [settings]="dropdownSettings" placeholder="Categories" [data]="categories" name="categories"
@@ -24,7 +24,7 @@
         <label for="location">Location</label>
     </div>
     <div class="row g-1">
-        <div class="form-floating mb-3 me-2 col-md">
+        <div class="form-floating mb-3 me-2">
             <input type="text" class="form-control" id="type" name="type" placeholder="Contract type" 
                 [(ngModel)]="job.contractType" #type="ngModel">
             <label for="type">Contract type</label>

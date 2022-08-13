@@ -1,18 +1,19 @@
 
-<div class="alert alert-danger" role="alert" *ngIf="error">
+<div class="alert alert-danger mt-3" role="alert" *ngIf="error">
     {{error}}
 </div>
 <article *ngIf="job"  [class.card]="!isDetail">
     <div class="card-body">
-        <h2 *ngIf="!isDetail">{{ job.name }}</h2>
+         <h2 *ngIf="!isDetail" class="card-title">{{ job.name }}</h2>
         <h1 *ngIf="isDetail">{{ job.name }}</h1>
+        <h6 *ngIf="!isDetail" class="card-subtitle">{{ job.company?.name }}</h6>
         <ng-container *ngIf="isDetail && user.id">
             <div *ngIf="user.isSuper || user.id == job.company?.adminId; else apply" class="my-3">
-                <button type="button" class="btn btn-success me-2" (click)="edit(job.id)"><i class="fas fa-edit"></i> Edit</button>
-                <button type="button" class="btn btn-danger" (click)="delete(job.id)"><i class="far fa-trash-alt"></i> Delete</button>
+                <button type="button" class="btn btn-success me-2 mb-2" (click)="edit(job.id)"><i class="fas fa-edit"></i> Edit</button>
+                <button type="button" class="btn btn-danger me-2 mb-2" (click)="delete(job.id)"><i class="far fa-trash-alt"></i> Delete</button>
             </div>
             <ng-template #apply>
-                <button type="button" class="btn btn-success" (click)="applyJob(job.id)"><i class="far fa-envelope-open"></i> Apply</button>
+                <button *ngIf="canApply" type="button" class="btn btn-success mb-2" (click)="applyJob()"><i class="far fa-envelope-open"></i> Apply</button>
             </ng-template>
         </ng-container>
         
@@ -47,6 +48,18 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div *ngIf="job.applications && job.applications.length > 0 && (user.isSuper || user.id == job.company?.adminId )">
+                <h2 type="button" data-bs-toggle="collapse" data-bs-target="#applications">Applications</h2>
+                <div class="collapse" id="applications">
+                    <app-application-list [applications]="job.applications" [fromJob]="true" ></app-application-list>
+                </div>
+            </div>
+            <div *ngIf="!canApply && job.applications">
+                <h2 type="button" data-bs-toggle="collapse" data-bs-target="#application">Your application</h2>
+                <div class="collapse" id="application">
+                    <app-application-list [applications]="yourApplication()" [fromJob]="true" ></app-application-list>
                 </div>
             </div>
         </div>

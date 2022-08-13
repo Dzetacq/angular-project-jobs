@@ -8,12 +8,16 @@ import { Application } from './application';
   providedIn: 'root'
 })
 export class ApplicationService {
-  url: string = api + "applications/";
+  url: string = api + "Applications/";
 
   constructor(private http: HttpClient) { }
 
   getApplicationsByJob(id: number): Observable<Application[]> {
     return this.http.get<Application[]>(this.url + "job/" + id)
+  }
+
+  getApplicationsByUser(id: string): Observable<Application[]> {
+    return this.http.get<Application[]>(this.url + "user/" + id)
   }
 
   getApplication(userId: string, jobId: number): Observable<Application> {

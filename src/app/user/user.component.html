@@ -1,7 +1,12 @@
 <h1>{{ user.firstname }} {{ user.lastname }}</h1>
 <h2 type="button" data-bs-toggle="collapse" data-bs-target="#personals">Personal information</h2>
-<div class="collapse show" id="personals">
-    <p><button class="btn btn-primary mt-1" routerLinkActive="active" [routerLink]="'edit'">Edit</button></p>
+<div class="collapse" id="personals">
+    <p *ngIf="user.id == auth.getUser()?.id">
+        <button class="btn btn-primary me-2 mt-1" routerLinkActive="active" [routerLink]="'edit'">Edit</button>
+        <button type="button" class="btn btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#passwordEdit">
+            <i class="fas fa-edit"></i> Change password
+        </button>
+    </p>
     <table class="table table-borderless">
         <tbody>
             <tr *ngFor="let line of shows">
@@ -11,9 +16,42 @@
         </tbody>
     </table>
 </div>
+<ng-container *ngIf="user.applications != null && user.applications.length > 0">
+    <h2 type="button" data-bs-toggle="collapse" data-bs-target="#appl">Your applications</h2>
+    <div class="collapse" id="appl">
+        <app-application-list [applications]="user.applications" [fromUser]="true"></app-application-list>
+    </div>
+</ng-container>
 <div *ngIf="user.isAdmin">
     <h2  type="button" data-bs-toggle="collapse" data-bs-target="#companies">Companies</h2>
     <div id="companies" class="collapse show row">
         <app-company *ngFor="let company of user.companies" [company]="company" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 p-2"></app-company>
+    </div>
+</div>
+<div class="modal fade" id="passwordEdit" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLabel">Change password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form (ngSubmit)="onSubmit()" #adminForm="ngForm">
+                <div class="modal-body mb-2">
+                    <div class="alert alert-danger mt-3" role="alert" *ngIf="error">
+                        {{error}}
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control mt-3" id="newPw" name="newPw" 
+                                placeholder="New password" [(ngModel)]="pwModel.newPassword" #newPw="ngModel" required>
+                        <label for="floatingPassword">New password</label>
+                        <div [hidden]="newPw.valid || newPw.pristine" class="alert alert-danger mt-3">Password is required</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!adminForm.form.valid || isSubmitted">Save</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

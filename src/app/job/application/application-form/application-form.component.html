@@ -1,0 +1,14 @@
+<div class="alert alert-danger mt-3" role="alert" *ngIf="isSubmitted && error">
+    {{error}}
+  </div>
+  <h1>Applying for {{ job.name }}</h1>
+  <form (ngSubmit)="onSubmit()" #applForm="ngForm">
+    <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 
+                [(ngModel)]="appl.description" #description="ngModel" required></textarea>
+        <label for="description">Description</label>
+        <div [hidden]="description.valid || description.pristine" class="alert alert-danger mt-3">Description is required</div>
+    </div>
+    <button type="submit" class="btn btn-primary" *ngIf="isAdd" [disabled]="!applForm.form.valid || isSubmitted">Add</button>
+    <button type="submit" class="btn btn-primary" *ngIf="isEdit" [disabled]="!applForm.form.valid || isSubmitted">Save</button>
+  </form>

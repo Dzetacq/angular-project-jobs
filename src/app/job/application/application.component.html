@@ -1,1 +1,45 @@
-<p>application works!</p>
+<article *ngIf="application"  [class.card]="!isDetail">
+    <div class="card-body">
+        <div *ngIf="!isDetail">
+            <ng-container *ngIf="fromUser">
+                <h4>{{ application.job?.name }}</h4>
+                <p>Company: {{ application.job?.company?.name }}</p>
+            </ng-container>
+            <h4 *ngIf="fromJob">{{ application.user?.userName }}</h4>
+            <a ngbNavLink [routerLink]="'/application/' + application.userId + '/' + application.jobId + '/' + fromJob" 
+                 href="/" class="stretched-link"></a>
+        </div>
+        <div *ngIf="isDetail">
+            <h1>Application</h1>
+            <div class="my-3">
+                <button *ngIf="application.userId == user.id" type="button" class="btn btn-success me-2" 
+                        (click)="edit(application.userId, application.jobId)"><i class="fas fa-edit"></i> Edit</button>
+                <button *ngIf="application.userId == user.id || application.job?.company?.adminId == user.id || user.isSuper" type="button" class="btn btn-danger" 
+                        (click)="delete(application.userId, application.jobId)"><i class="far fa-trash-alt"></i> Delete</button>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-2">
+                    <article *ngIf="application.job" class="card">
+                        <div class="card-body">
+                            <h4>{{ application.job.name }}</h4>
+                            <p>{{ application.job.company?.name }}</p>
+                        </div>
+                        <a ngbNavLink [routerLink]="'/job/' + application.jobId" href="/" class="stretched-link"></a>
+                    </article>
+                </div>
+                <div class="col-md-6 my-2">
+                    <article *ngIf="application.user" class="card">
+                        <div class="card-body">
+                            <h4>{{ application.user.userName }}</h4>
+                            <p>{{ application.user.firstname + ' ' + application.user.lastname }}</p>
+                        </div>
+                        <a ngbNavLink [routerLink]="'/user/' + application.userId" href="/" class="stretched-link"></a>
+                    </article>
+                </div>
+                
+            </div>
+            
+            <p>{{ application.description }}</p>
+        </div>
+    </div>
+</article>

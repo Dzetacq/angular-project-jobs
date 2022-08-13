@@ -4,7 +4,7 @@ import { Job } from "../job";
 export interface Application {
     userId: string;
     jobId: number;
-    description: string;
-    user: User;
-    job: Job;
+    description?: string;
+    user?: User;
+    job?: Job;
 }

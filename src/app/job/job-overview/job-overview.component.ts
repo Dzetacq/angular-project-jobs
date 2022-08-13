@@ -1,12 +1,17 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { flip } from '@popperjs/core';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Subscription } from 'rxjs';
+import { CategoryService } from 'src/app/category/category.service';
+import { SectorService } from 'src/app/sector/sector.service';
 import { AuthService } from 'src/app/user/auth/auth.service';
 import { User } from 'src/app/user/user';
 import { Company } from '../company/company';
 import { CompanyService } from '../company/company.service';
 import { Job } from '../job'
 import { JobService } from '../job.service'
+import { JobSort } from './job-sort';
 
 @Component({
   selector: 'app-job-overview',
@@ -16,21 +21,27 @@ import { JobService } from '../job.service'
 export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
   @Input() companyId: number = 0;
   @Input() isSeparate: boolean = true;
+  jobSort: JobSort = {companies: [], sectors: [], companyId: 0, search: "", location: "", 
+                      sector: 0, categories: [], selectedCategories: [], sort: ""}
   company: Company = {id: 0, name: "", adminId: "", jobCount: 0, jobs: []}
   user: User = {id: "", userName: "", companies: [], isAdmin: false, isSuper: false}
   jobs: Job[] = [];
   subs: Subscription[] = [];
-  constructor(private jobService: JobService, private router: Router, 
-    private auth: AuthService, private companyService: CompanyService) {
+  dropdownSettings: IDropdownSettings = {};
+  constructor(private jobService: JobService, private router: Router, private categoryService: CategoryService, 
+    private auth: AuthService, private companyService: CompanyService, private sectorService: SectorService) {
     
    }
 
   ngOnInit(): void {
     this.getJobs();
     this.user = this.auth.getUser() ?? this.user;
+    this.dropdownSettings = {
+      idField: 'id', textField: 'name',
+    }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.getJobs();
   }
 
@@ -43,6 +54,9 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getJobs() {
+    this.subs.push(this.companyService.getCompanies().subscribe(r => this.jobSort.companies = r));
+    this.subs.push(this.sectorService.getSectors().subscribe(r => this.jobSort.sectors = r));
+    this.subs.push(this.categoryService.getCategories().subscribe(r => this.jobSort.categories = r));
     if (this.companyId == 0) {
       this.subs.push(this.jobService.getJobs()
             .subscribe(r => this.jobs = this.companyId == 0 ? r : this.jobs))
@@ -52,5 +66,40 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
       this.subs.push(this.jobService.getJobsByCompany(this.companyId)
             .subscribe(r => this.jobs = r))
     }
+  }
+
+  filter(job: Job): boolean {
+    if (this.jobSort.companyId > 0 && this.jobSort.companyId != job.companyId) {
+      return false;
+    }
+    if (this.jobSort.sector > 0 && this.jobSort.sector != job.sectorId) {
+      return false;
+    }
+    if (this.jobSort.search.length > 0) {
+      if (!this.termSearch(this.jobSort.search, [job.name, job.description, job.contractType])) {
+        return false;
+      }
+    }
+    if (this.jobSort.location.length > 0) {
+      if (!this.termSearch(this.jobSort.location, [job.location])) {
+        return false;
+      }
+    }
+    if (this.jobSort.selectedCategories.length > 0) {
+      if (!this.jobSort.selectedCategories.every(c => job.categories?.map(cat => cat.id).includes(c.id))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  termSearch(search: string, places: (string|undefined)[]) : boolean {
+    let terms = search.toLowerCase().trim().split(/\s+/)
+    return !terms.some(t => places.every(p => !p?.toLowerCase().includes(t)));
+    //true if all found
+  }
+
+  sorter(jobs: Job[]) : Job[] {
+    return jobs;
   }
 }

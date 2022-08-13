@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {UserResponse} from '../userResponse';
 import {api} from '../../../global'
 import { EditUser } from './edit-user';
+import { EditPassword } from '../editPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,9 @@ export class AuthService {
   }
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(this.userUrl + id);
+  }
+  changePassword(id: string, newPw: EditPassword): Observable<User> {
+    console.log(newPw);
+    return this.http.put<User>(this.url + "password/" + id, newPw);
   }
 }

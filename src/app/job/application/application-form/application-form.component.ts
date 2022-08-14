@@ -36,7 +36,6 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
     if (this.isAdd == this.isEdit) {
       window.history.back();
     }
-    console.log(this.appl)
     if (this.appl.jobId) {
       this.subs.push(this.jobService.getJobById(this.appl.jobId).subscribe(r => this.job = r));
     }
@@ -49,7 +48,6 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.isSubmitted = true;
     let observable = new Observable<Application>();
-    console.log(this.appl);
     if (this.isAdd) {
       observable = this.service.postApplication(this.appl);
     }

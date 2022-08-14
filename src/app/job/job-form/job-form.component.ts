@@ -22,7 +22,7 @@ import { CompanyService } from '../company/company.service';
 })
 export class JobFormComponent implements OnInit, OnDestroy {
   job: Job = {id: 0, name: "", sectorId: 0}
-  dateInput: NgbDateStruct = {year: 0, month: 0, day: 0};
+  dateInput!: NgbDateStruct;
   //editJob?
   id: number = 0;
   companyId: number = 0;
@@ -47,6 +47,7 @@ export class JobFormComponent implements OnInit, OnDestroy {
     this.user = this.auth.getUser() ?? this.user;
     if (this.id > 0) {
       this.subs.push(this.service.getJobById(this.id).subscribe(r => {
+        this.subs.push(this.companyService.getCompanyById(r.companyId ?? 0).subscribe(r => this.company = r));
         this.job = r;
         if (r.deadline) {
           let date = new Date(r.deadline);
@@ -61,7 +62,9 @@ export class JobFormComponent implements OnInit, OnDestroy {
     if (this.isAdd == this.isEdit) {
       window.history.back();
     }
-    this.subs.push(this.companyService.getCompanyById(this.companyId).subscribe(r => this.company = r));
+    if (this.companyId) {
+      this.subs.push(this.companyService.getCompanyById(this.companyId).subscribe(r => this.company = r));
+    } 
     this.subs.push(this.sectorService.getSectors().subscribe(r => this.sectors = r));
     this.subs.push(this.categoryService.getCategories().subscribe(r => this.categories = r));
     this.dropdownSettings = {
@@ -75,7 +78,11 @@ export class JobFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.isSubmitted = true;
-    this.job.deadline = new Date(this.dateInput.year, this.dateInput.month - 1, this.dateInput.day + 1).toISOString()
+    if (this.dateInput) {
+      this.job.deadline = new Date(this.dateInput.year, this.dateInput.month - 1, this.dateInput.day + 1).toISOString()
+    } else {
+      this.job.deadline = null;
+    }
     let observable = new Observable<Job>();
     if (this.isAdd) {
       this.job.companyId = this.companyId;

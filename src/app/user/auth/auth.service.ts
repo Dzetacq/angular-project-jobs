@@ -60,7 +60,6 @@ export class AuthService {
     return this.http.get<User>(this.userUrl + id);
   }
   changePassword(id: string, newPw: EditPassword): Observable<User> {
-    console.log(newPw);
     return this.http.put<User>(this.url + "password/" + id, newPw);
   }
 }

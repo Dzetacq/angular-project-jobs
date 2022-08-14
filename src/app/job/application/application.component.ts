@@ -36,7 +36,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   }
 
   delete(userId: string, jobId: number) {
-    console.log(this.fromJob ? "From job" : "From user")
     this.subs.push(this.service.deleteApplication(userId, jobId).subscribe({
       next: () => this.router.navigate([this.fromJob? 'job/' + jobId : 'user/' + userId]), 
       error: e => this.error = e.message

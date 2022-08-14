@@ -1,19 +1,14 @@
 <div class="alert alert-danger mt-3" role="alert" *ngIf="isSubmitted && error">
     {{error}}
   </div>
-  <h1>Adding job for {{ company.name }}</h1>
+  <h1 *ngIf="isAdd">Adding job for {{ company.name }}</h1>
+  <h1 *ngIf="isEdit">Editing job for {{ company.name }}</h1>
   <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="row gx-1" *ngIf="user.id == company.adminId">
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="name" name="name" placeholder="Name" 
             [(ngModel)]="job.name" #name="ngModel" required>
         <label for="name">Name</label>
         <div [hidden]="name.valid || name.pristine" class="alert alert-danger mt-3">Name is required</div>
-    </div>
-    <div class="form-floating mb-3">
-        <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 
-                [(ngModel)]="job.description" #description="ngModel" required></textarea>
-        <label for="description">Description</label>
-        <div [hidden]="description.valid || description.pristine" class="alert alert-danger mt-3">Description is required</div>
     </div>
     <div class="form-floating mb-3 me-2">
         <input type="text" class="form-control" id="type" name="type" placeholder="Contract type" 
@@ -29,11 +24,6 @@
             [(ngModel)]="job.location" #location="ngModel">
         <label for="location">Location</label>
     </div>
-    <!--<div class="form-floating mb-3 col-md">
-        <input type="text" class="form-control" id="salary" name="salary" placeholder="Salary" 
-            [(ngModel)]="job.salary" #type="ngModel">
-        <label for="salary">Salary</label>
-    </div>-->
     <div class="form-floating mb-3 col-md-6 pe-2">
         <select class="form-select" [(ngModel)]="job.sectorId" #sector="ngModel" id="sector" name="sector">
             <option value="0" [selected]="isAdd">None</option>
@@ -46,8 +36,29 @@
             <input class="form-control p-3" placeholder="yyyy-mm-dd" id="deadline" #deadline="ngModel"
                  name="deadline" [(ngModel)]="dateInput" ngbDatepicker #d="ngbDatepicker">
             <button class="btn btn-primary calendar w-25" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
-        </div>
+        </div> {{ deadline.valid }}
     </div>
+    <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 
+                [(ngModel)]="job.description" #description="ngModel" required></textarea>
+        <label for="description">Description</label>
+        <div [hidden]="description.valid || description.pristine" class="alert alert-danger mt-3">Description is required</div>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="offer" name="offer" placeholder="Offer" 
+                [(ngModel)]="job.offer" #offer="ngModel"></textarea>
+        <label for="offer">Offer</label>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="profile" name="profile" placeholder="Profile" 
+                [(ngModel)]="job.profile" #profile="ngModel"></textarea>
+        <label for="profile">Profile</label>
+    </div>
+    <!--<div class="form-floating mb-3 col-md">
+        <input type="text" class="form-control" id="salary" name="salary" placeholder="Salary" 
+            [(ngModel)]="job.salary" #type="ngModel">
+        <label for="salary">Salary</label>
+    </div>-->
     <button type="submit" class="btn btn-primary form-control mb-3" *ngIf="isAdd" [disabled]="!categoryForm.form.valid || isSubmitted">Add</button>
     <button type="submit" class="btn btn-primary form-control mb-3" *ngIf="isEdit" [disabled]="!categoryForm.form.valid || isSubmitted">Save</button>
   </form>

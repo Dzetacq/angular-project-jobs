@@ -75,7 +75,6 @@ export class AuthComponent implements OnInit {
 
   login(): void {
     this.auth.authenticate(this.user).subscribe({next: r => {
-      console.log(r.user);
       this.error = '';
       localStorage.setItem('token', r.accessToken);
       localStorage.setItem('id', r.user.id);

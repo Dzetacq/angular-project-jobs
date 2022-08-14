@@ -31,7 +31,6 @@ export class CompanyFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.isSubmitted = true;
-    console.log(this.company);
     this.subs.push(this.service.postCompany(this.company).subscribe({
       next: r => this.router.navigateByUrl('/company/' + r.id),
       error: e => this.error = e.message

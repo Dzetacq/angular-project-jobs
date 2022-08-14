@@ -7,7 +7,7 @@ export interface Job {
     id: number;
     name: string;
     description?: string;
-    deadline?: string;
+    deadline?: string | null;
     contractType?: string;
     location?: string;
     salary?: string;
@@ -17,4 +17,6 @@ export interface Job {
     sector?: Sector;
     categories? : Category[];
     applications? : Application[];
+    profile?: string;
+    offer?: string;
 }

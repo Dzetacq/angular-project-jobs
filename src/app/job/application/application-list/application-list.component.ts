@@ -12,8 +12,6 @@ export class ApplicationListComponent implements OnInit {
   @Input() fromJob: boolean = false;
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.fromUser ? "From User" : this.fromJob ? "From Job" : "none")
-  }
+  ngOnInit(): void {}
 
 }

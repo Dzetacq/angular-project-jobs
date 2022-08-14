@@ -38,7 +38,6 @@ export class UserComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(): void {
     this.getData();
-    console.log(this.user)
   }
 
   ngOnDestroy(): void {

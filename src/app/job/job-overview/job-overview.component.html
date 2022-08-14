@@ -1,32 +1,41 @@
 <div *ngIf="isSeparate">
     <h1>Job Overview</h1>
-    <div id="search-bar" class="row">
-        <div class="form-floating col-xl-3 col-md-4 col-sm-6 mb-3">
+    <button class="btn btn-primary d-md-none mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#search-bar">
+        Search/Sort
+    </button>
+    <div id="search-bar" class="row collapse d-md-flex">
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
             <select class="form-select" [(ngModel)]="jobSort.companyId" #company="ngModel" id="company" name="company">
                 <option value="0" [selected]="jobSort.companyId == 0">All companies</option>
                 <option *ngFor="let c of jobSort.companies" [ngValue]="c.id" [selected]="jobSort.companyId == c.id">{{ c.name }}</option>
             </select>
             <label for="company">Company: </label>
         </div>
-        <div class="form-floating col-xl-3 col-md-4 col-sm-6 mb-3">
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
             <select class="form-select" [(ngModel)]="jobSort.sector" #sector="ngModel" id="sector" name="sector">
                 <option value="0" [selected]="jobSort.sector == 0">All sectors</option>
                 <option *ngFor="let s of jobSort.sectors" [ngValue]="s.id" [selected]="jobSort.sector == s.id">{{ s.name }}</option>
             </select>
             <label for="company">Sector: </label>
         </div>
-        <div class="form-floating col-xl-3 col-md-4 col-sm-6 mb-3">
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
             <input class="form-control" [(ngModel)]="jobSort.search" #search="ngModel" id="search" name="search" placeholder="search term">
             <label for="search">Search term</label>
         </div>
-        <div class="form-floating col-xl-3 col-md-4 col-sm-6 mb-3">
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
             <input class="form-control" [(ngModel)]="jobSort.location" #location="ngModel" id="location" name="location" placeholder="location">
             <label for="location">Location</label>
         </div>
-        <div class="form-floating col-xl-3 col-md-4 col-sm-6 mb-3">
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
             <ng-multiselect-dropdown [settings]="dropdownSettings" placeholder="Categories" [data]="jobSort.categories" name="categories"
             [(ngModel)]="jobSort.selectedCategories" #categories="ngModel" id="overviewCategories"></ng-multiselect-dropdown>
             <label for="categories">Categories {{ jobSort.selectedCategories.length > 0 ? "(" + jobSort.selectedCategories.length + " selected)" : "" }}</label>
+        </div>
+        <div class="form-floating col-md-4 col-sm-6 mb-3">
+            <select class="form-select" [(ngModel)]="jobSort.sort" #sort="ngModel" id="sort" name="sort">
+                <option *ngFor="let s of sorts" [ngValue]="s.v" [selected]="jobSort.sort == s.v">{{ s.s }}</option>
+            </select>
+            <label for="company">Sorting: </label>
         </div>
     </div>
 </div>

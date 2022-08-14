@@ -15,6 +15,7 @@ import { ApplicationModule } from './application/application.module';
 import { ApplicationComponent } from './application/application.component';
 import { ApplicationListComponent } from './application/application-list/application-list.component';
 import { CompanyFormComponent } from './company/company-form/company-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -35,7 +36,8 @@ import { CompanyFormComponent } from './company/company-form/company-form.compon
     SharedModule,
     FormsModule,
     NgMultiSelectDropDownModule,
-    ApplicationModule
+    ApplicationModule,
+    NgbModule
   ],
   exports: [
     JobComponent,

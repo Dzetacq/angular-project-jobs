@@ -8,6 +8,7 @@ import { SectorService } from 'src/app/sector/sector.service';
 import { Job } from '../job';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { JobService } from '../job.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-job-form',
@@ -16,6 +17,7 @@ import { JobService } from '../job.service';
 })
 export class JobFormComponent implements OnInit, OnDestroy {
   job: Job = {id: 0, name: "", sectorId: 0}
+  dateInput: NgbDateStruct = {year: 0, month: 0, day: 0};
   //editJob?
   id: number = 0;
   companyId: number = 0;
@@ -35,7 +37,14 @@ export class JobFormComponent implements OnInit, OnDestroy {
     this.id = +this.router.getCurrentNavigation()?.extras.state?.['id'];
     this.companyId = +this.router.getCurrentNavigation()?.extras.state?.['companyId'];
     if (this.id > 0) {
-      this.subs.push(this.service.getJobById(this.id).subscribe(r => this.job = r));
+      this.subs.push(this.service.getJobById(this.id).subscribe(r => {
+        this.job = r;
+        if (r.deadline) {
+          let date = new Date(r.deadline);
+          this.dateInput = r.deadline? {year: date.getFullYear(), month: date.getMonth() + 1, 
+              day: date.getDate()} : this.dateInput
+        }
+      }));
     }
   }
 
@@ -53,6 +62,7 @@ export class JobFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.isSubmitted = true;
+    this.job.deadline = new Date(this.dateInput.year, this.dateInput.month - 1, this.dateInput.day + 1).toISOString()
     let observable = new Observable<Job>();
     if (this.isAdd) {
       this.job.companyId = this.companyId;

@@ -7,7 +7,7 @@ export interface Job {
     id: number;
     name: string;
     description?: string;
-    deadline?: Date;
+    deadline?: string;
     contractType?: string;
     location?: string;
     salary?: string;

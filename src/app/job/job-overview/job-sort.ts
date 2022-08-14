@@ -11,5 +11,5 @@ export interface JobSort {
     location: string;
     sector: number;
     selectedCategories: Category[];
-    sort: string;
+    sort: number;
 }

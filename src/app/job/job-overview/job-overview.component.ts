@@ -22,9 +22,11 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
   @Input() companyId: number = 0;
   @Input() isSeparate: boolean = true;
   jobSort: JobSort = {companies: [], sectors: [], companyId: 0, search: "", location: "", 
-                      sector: 0, categories: [], selectedCategories: [], sort: ""}
-  company: Company = {id: 0, name: "", adminId: "", jobCount: 0, jobs: []}
-  user: User = {id: "", userName: "", companies: [], isAdmin: false, isSuper: false}
+                      sector: 0, categories: [], selectedCategories: [], sort: 0};
+  sorts = [{v: 0, s: "Default"}, {v: 1, s: "Soonest deadline first"}, {v: 2, s: "Latest deadline first"}, 
+           {v: 3, s: "Without deadline first"}, {v: 4, s: "Expired jobs"}]
+  company: Company = {id: 0, name: "", adminId: "", jobCount: 0, jobs: []};
+  user: User = {id: "", userName: "", companies: [], isAdmin: false, isSuper: false};
   jobs: Job[] = [];
   subs: Subscription[] = [];
   dropdownSettings: IDropdownSettings = {};
@@ -100,6 +102,77 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   sorter(jobs: Job[]) : Job[] {
+    switch (this.jobSort.sort) {
+      case 0: //default
+        jobs.sort((a, b) => {
+          if (a.deadline == undefined || b.deadline == undefined) {
+            return a.deadline == undefined ? -1 : 1
+          }
+          let aDate = new Date(a.deadline).getTime();
+          let bDate = new Date(b.deadline).getTime();
+          let today = new Date().getTime();
+          if (aDate < today ? bDate > today : bDate < today) {
+            return aDate < today ? 1 : -1;
+          }
+          return aDate < bDate ? -1 : 1;
+        })
+        break;
+      case 1: // soonest first
+        jobs.sort((a, b) => {
+          let today = new Date().getTime();
+          let aDate = a.deadline != undefined ? new Date(a.deadline).getTime() : today;
+          let bDate = b.deadline != undefined ? new Date(b.deadline).getTime() : today;
+          if ((aDate < today || bDate < today)) {
+            return aDate < today && bDate >= today ? 1 : bDate < today && aDate >= today ? -1 : aDate < bDate ? 1 : -1;
+          }
+          if (a.deadline == undefined || b.deadline == undefined) {
+            return a.deadline == undefined ? 1 : -1
+          }
+          return aDate < bDate ? -1 : 1;
+        })
+        break;
+      case 2: //latest first
+        jobs.sort((a, b) => {
+          let today = new Date().getTime();
+          let aDate = a.deadline != undefined ? new Date(a.deadline).getTime() : today;
+          let bDate = b.deadline != undefined ? new Date(b.deadline).getTime() : today;
+          if (aDate < today ? bDate > today : bDate < today) {
+            return aDate < today ? 1 : -1;
+          }
+          return aDate < bDate ? 1 : -1;
+        })
+        break; 
+      case 3: //without first
+        jobs.sort((a, b) => {
+          if (a.deadline == undefined || b.deadline == undefined) {
+            return a.deadline == undefined ? -1 : 1
+          }
+          let aDate = new Date(a.deadline).getTime();
+          let bDate = new Date(b.deadline).getTime();
+          let today = new Date().getTime();
+          if (aDate < today ? bDate > today : bDate < today) {
+            return aDate < today ? 1 : -1;
+          }
+          return aDate < bDate ? -1 : 1;
+        })
+        break;
+      case 4: //expired 
+        jobs.sort((a, b) => {
+          if (a.deadline == undefined || b.deadline == undefined) {
+            return a.deadline == undefined ? 1 : -1
+          }
+          let aDate = new Date(a.deadline).getTime();
+          let bDate = new Date(b.deadline).getTime();
+          let today = new Date().getTime();
+          if (aDate < today ? bDate > today : bDate < today) {
+            return aDate < today ? -1 : 1;
+          }
+          return aDate < bDate ? 1 : -1;
+        })
+        break;
+      default:
+        break;
+    }
     return jobs;
   }
 }

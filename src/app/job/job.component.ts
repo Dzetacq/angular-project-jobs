@@ -17,6 +17,8 @@ export class JobComponent implements OnInit, OnDestroy, OnChanges {
   @Input() job: Job = {id: 0, name: "", description: "", sectorId: 0};
   @Input() isDetail: boolean = false;
   canApply: boolean = false;
+  deadline: Date | null = null;
+  today: Date = new Date();
   user: User = {id: "", userName: "", isAdmin: false, isSuper: false, companies: []}
   error: string = "";
   subs: Subscription[] = [];
@@ -25,13 +27,19 @@ export class JobComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.user = this.auth.getUser() ?? this.user;
+    if (this.job.deadline) {
+      this.deadline = new Date(this.job.deadline);
+    }
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
   }
   ngOnChanges(): void {
-    this.canApply = this.job.applications ? !this.job.applications?.map(a => a.userId).includes(this.user.id) : true
+    this.canApply = !this.auth.isLoggedIn() || this.job.applications ? !this.job.applications?.map(a => a.userId).includes(this.user.id) : true
+    if (this.job.deadline) {
+      this.deadline = new Date(this.job.deadline);
+    }
   }
 
   edit(id: number) {

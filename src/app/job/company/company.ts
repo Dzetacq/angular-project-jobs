@@ -9,4 +9,8 @@ export interface Company {
     admin?: User;
     jobCount?: number;
     jobs?: Job[];
+    description?: string;
+    address?: string;
+    phoneNumber?: string;
+    mailAddress?: string;
 }

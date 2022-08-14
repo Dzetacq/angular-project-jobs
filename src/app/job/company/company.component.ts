@@ -38,10 +38,17 @@ export class CompanyComponent implements OnInit, OnDestroy {
     this.editCompany = {
       id: this.company.id, 
       name: this.company.name != null && this.company.name.length > 0 ? this.company.name : undefined,
-      adminId: this.company.adminId
+      adminId: this.company.adminId, 
+      description: this.company.description,
+      phoneNumber: this.company.phoneNumber,
+      address: this.company.address,
+      mailAddress: this.company.mailAddress
     }
     this.subs.push(this.companyService.putCompany(this.company.id, this.editCompany).subscribe(r => {
-      window.location.reload();
+      document.getElementById("adminEdit")?.click();
+      this.company = r
+      this.isSubmitted = false;
+      //window.location.reload();
     }));
   }
 

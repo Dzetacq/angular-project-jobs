@@ -70,6 +70,16 @@
         </div>
         <small *ngIf="deadline" [class.text-danger]="deadline.getTime() < today.getTime()">Deadline: {{ deadline.getDate()+'/'+(deadline.getMonth() + 1)+'/'+deadline.getFullYear() }}</small>
         <p>{{ job.description ? (isDetail? job.description : (job.description | shortenContent : 250)) : "" }}</p>
+        <div *ngIf="isDetail">
+            <ng-container *ngIf="job.offer">
+                <h4>Offer</h4>
+                <p>{{ job.offer }}</p>
+            </ng-container>
+            <ng-container *ngIf="job.profile">
+                <h4>Profile</h4>
+                <p>{{ job.profile }}</p>
+            </ng-container>
+        </div>
        <a *ngIf="!isDetail" ngbNavLink [routerLink]="'/job/' + job.id" href="/" class="stretched-link"></a>
     </div>
 </article>

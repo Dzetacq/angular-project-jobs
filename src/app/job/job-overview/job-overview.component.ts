@@ -78,7 +78,7 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
       return false;
     }
     if (this.jobSort.search.length > 0) {
-      if (!this.termSearch(this.jobSort.search, [job.name, job.description, job.contractType])) {
+      if (!this.termSearch(this.jobSort.search, [job.name, job.description, job.contractType, job.profile, job.offer])) {
         return false;
       }
     }

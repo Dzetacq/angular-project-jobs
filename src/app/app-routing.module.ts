@@ -8,7 +8,7 @@ import { CompanyOverviewComponent } from './job/company/company-overview/company
 import { CompanyFormComponent } from './job/company/company-form/company-form.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/job/overview', pathMatch: 'full' },
   { path: 'job', loadChildren: () => import('./job/job.module').then(m => m.JobModule)}, 
   { path: 'login', component: AuthComponent},
   { path: 'register', component: AuthComponent},

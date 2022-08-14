@@ -1,7 +1,8 @@
 <div class="alert alert-danger mt-3" role="alert" *ngIf="isSubmitted && error">
     {{error}}
   </div>
-  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="row gx-1">
+  <h1>Adding job for {{ company.name }}</h1>
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="row gx-1" *ngIf="user.id == company.adminId">
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="name" name="name" placeholder="Name" 
             [(ngModel)]="job.name" #name="ngModel" required>

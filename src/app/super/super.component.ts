@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../user/auth/auth.service';
+import { User } from '../user/user';
 
 @Component({
   selector: 'app-super',
@@ -6,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./super.component.scss']
 })
 export class SuperComponent implements OnInit {
-
-  constructor() { }
+  user: User = {id: "", userName: "", isAdmin: false, isSuper: false, companies: []};
+  constructor(private auth: AuthService) { 
+    this.user = auth.getUser() ?? this.user;
+    if (!this.user.isSuper) {
+      window.history.back();
+    }
+  }
 
   ngOnInit(): void {
   }

@@ -12,7 +12,6 @@ import { AuthService } from '../user/auth/auth.service';
 })
 export class MenuComponent implements OnInit, OnDestroy {
   links = [
-    { title: "Home", url: "/" },
     { title: "Job overview", url: "/job/overview" }
   ];
   hide: boolean = true;

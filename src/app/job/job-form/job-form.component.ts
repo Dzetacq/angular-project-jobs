@@ -9,6 +9,11 @@ import { Job } from '../job';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { JobService } from '../job.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
+import { Company } from '../company/company';
+import { User } from 'src/app/user/user';
+import { AuthService } from 'src/app/user/auth/auth.service';
+import { CompanyService } from '../company/company.service';
 
 @Component({
   selector: 'app-job-form',
@@ -21,6 +26,8 @@ export class JobFormComponent implements OnInit, OnDestroy {
   //editJob?
   id: number = 0;
   companyId: number = 0;
+  company: Company = {id: 0, name: "", adminId: "", jobCount: 0, jobs: []};
+  user: User = {id: "", userName: "", isAdmin: false, isSuper: false, companies: []}
   isSubmitted: boolean = false;
   sectors: Sector[] = [];
   categories: Category[] = [];
@@ -30,12 +37,14 @@ export class JobFormComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   dropdownSettings: IDropdownSettings = {};
 
-  constructor(private service: JobService, private router: Router, 
-      private sectorService: SectorService, private categoryService: CategoryService) {
+  constructor(private service: JobService, private router: Router, private auth: AuthService,
+      private sectorService: SectorService, private categoryService: CategoryService, 
+      private companyService: CompanyService) {
     this.isAdd = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'add';
     this.isEdit = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'edit';
     this.id = +this.router.getCurrentNavigation()?.extras.state?.['id'];
     this.companyId = +this.router.getCurrentNavigation()?.extras.state?.['companyId'];
+    this.user = this.auth.getUser() ?? this.user;
     if (this.id > 0) {
       this.subs.push(this.service.getJobById(this.id).subscribe(r => {
         this.job = r;
@@ -49,6 +58,10 @@ export class JobFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.isAdd == this.isEdit) {
+      window.history.back();
+    }
+    this.subs.push(this.companyService.getCompanyById(this.companyId).subscribe(r => this.company = r));
     this.subs.push(this.sectorService.getSectors().subscribe(r => this.sectors = r));
     this.subs.push(this.categoryService.getCategories().subscribe(r => this.categories = r));
     this.dropdownSettings = {

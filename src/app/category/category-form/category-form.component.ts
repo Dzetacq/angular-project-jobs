@@ -31,6 +31,9 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.isAdd == this.isEdit) {
+      window.history.back();
+    }
   }
 
   ngOnDestroy(): void {

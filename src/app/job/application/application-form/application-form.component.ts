@@ -33,6 +33,9 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.isAdd == this.isEdit) {
+      window.history.back();
+    }
     console.log(this.appl)
     if (this.appl.jobId) {
       this.subs.push(this.jobService.getJobById(this.appl.jobId).subscribe(r => this.job = r));

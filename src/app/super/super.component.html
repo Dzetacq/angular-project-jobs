@@ -1,20 +1,22 @@
 <h1>Super Admin</h1>
-<h2 type="button" data-bs-toggle="collapse" data-bs-target="#companies">Companies</h2>
-<div class="collapse" id="companies">
-    <app-company-overview [isSeparate]=false></app-company-overview>
-</div>
-
-<h2 type="button" data-bs-toggle="collapse" data-bs-target="#categories">Categories</h2>
-<div class="collapse" id="categories">
-    <app-category-list></app-category-list>
-</div>
-
-<h2 type="button" data-bs-toggle="collapse" data-bs-target="#sectors">Sectors</h2>
-<div class="collapse" id="sectors">
-    <app-sector-list></app-sector-list>
-</div>
-
-<h2 type="button" data-bs-toggle="collapse" data-bs-target="#users">Users</h2>
-<div class="collapse" id="users">
-    <app-user-list></app-user-list>
-</div>
+<ng-container *ngIf="user.isSuper">
+    <h2 type="button" data-bs-toggle="collapse" data-bs-target="#companies">Companies</h2>
+    <div class="collapse" id="companies">
+        <app-company-overview [isSeparate]=false></app-company-overview>
+    </div>
+    
+    <h2 type="button" data-bs-toggle="collapse" data-bs-target="#categories">Categories</h2>
+    <div class="collapse" id="categories">
+        <app-category-list></app-category-list>
+    </div>
+    
+    <h2 type="button" data-bs-toggle="collapse" data-bs-target="#sectors">Sectors</h2>
+    <div class="collapse" id="sectors">
+        <app-sector-list></app-sector-list>
+    </div>
+    
+    <h2 type="button" data-bs-toggle="collapse" data-bs-target="#users">Users</h2>
+    <div class="collapse" id="users">
+        <app-user-list></app-user-list>
+    </div>
+</ng-container>

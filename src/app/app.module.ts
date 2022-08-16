@@ -7,12 +7,14 @@ import { HomeComponent } from './home/home.component';
 import { UserModule } from './user/user.module';
 import { NgbModule, NgbNav, NgbNavItem } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -5,14 +5,12 @@
   <table class="table" *ngIf="categories && categories.length > 0">
     <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
+      <th scope="col-6">Name</th>
       <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let c of categories">
-      <th scope="row">{{c.id}}</th>
       <td>{{c.name}}</td>
       <td>
         <button type="button" class="btn btn-success me-1" (click)="edit(c.id)"><i class="fas fa-edit"></i></button>

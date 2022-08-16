@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <td class="col-md-3">LinkedIn:</td>
-                <td><a [href]="user.linkedIn" target="_blank">LinkedIn profile</a></td>
+                <td><a *ngIf="user.linkedIn" [href]="user.linkedIn" target="_blank">LinkedIn profile</a></td>
             </tr>
         </tbody>
     </table>

@@ -95,6 +95,10 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
     return true;
   }
 
+  filterArray(jobs: Job[]): Job[] {
+    return jobs.filter(j => this.filter(j));
+  }
+
   termSearch(search: string, places: (string|undefined)[]) : boolean {
     let terms = search.toLowerCase().trim().split(/\s+/)
     return !terms.some(t => places.every(p => !p?.toLowerCase().includes(t)));

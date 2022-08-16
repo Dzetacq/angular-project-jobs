@@ -36,7 +36,7 @@
             <input class="form-control p-3" placeholder="yyyy-mm-dd" id="deadline" #deadline="ngModel"
                  name="deadline" [(ngModel)]="dateInput" ngbDatepicker #d="ngbDatepicker">
             <button class="btn btn-primary calendar w-25" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
-        </div> {{ deadline.valid }}
+        </div>
     </div>
     <div class="form-floating mb-3">
         <textarea type="text" class="form-control" id="description" name="description" placeholder="Description" 

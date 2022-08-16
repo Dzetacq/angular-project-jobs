@@ -1,6 +1,6 @@
 <h1>{{ user.firstname }} {{ user.lastname }}</h1>
 <h2 type="button" data-bs-toggle="collapse" data-bs-target="#personals">Personal information</h2>
-<div class="collapse" id="personals">
+<div class="collapse show" id="personals">
     <p *ngIf="user.id == auth.getUser()?.id">
         <button class="btn btn-primary me-2 mt-1" routerLinkActive="active" [routerLink]="'edit'">Edit</button>
         <button type="button" class="btn btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#passwordEdit">
@@ -9,9 +9,33 @@
     </p>
     <table class="table table-borderless">
         <tbody>
-            <tr *ngFor="let line of shows">
-                <td class="col-md-3">{{ line[0] }}: </td>
-                <td>{{ line[1] }}</td>
+            <tr>
+                <td class="col-md-3">Username:</td>
+                <td>{{ user.userName }}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3">First name:</td>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3">Last name:</td>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3">Email:</td>
+                <td><a [href]="'mailto:' + user.email">{{ user.email }}</a></td>
+            </tr>
+            <tr>
+                <td class="col-md-3">Phone number:</td>
+                <td><a [href]="'tel:' + user.phoneNumber">{{ user.phoneNumber }}</a></td>
+            </tr>
+            <tr>
+                <td class="col-md-3">Address:</td>
+                <td>{{ user.address }}</td>
+            </tr>
+            <tr>
+                <td class="col-md-3">LinkedIn:</td>
+                <td><a [href]="user.linkedIn" target="_blank">LinkedIn profile</a></td>
             </tr>
         </tbody>
     </table>

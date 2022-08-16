@@ -32,7 +32,7 @@
             </div>
             <div *ngIf="job.contractType || job.location || job.salary || job.sector">
                 <h2 type="button" data-bs-toggle="collapse" data-bs-target="#details">Details</h2>
-                <div class="collapse" id="details">
+                <div class="collapse show" id="details">
                     <table class="table table-borderless">
                         <tbody>
                             <tr *ngIf="job.contractType">

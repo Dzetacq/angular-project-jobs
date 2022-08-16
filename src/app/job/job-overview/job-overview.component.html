@@ -43,7 +43,14 @@
     <i class="fas fa-edit"></i> Add job
 </button></p>
 <div class="row">
-    <ng-container *ngFor="let job of sorter(jobs)">
-        <app-job *ngIf="filter(job)" [job]="job" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 p-2"></app-job>
+    <ng-container *ngIf="filterArray(sorter(jobs)) as sortedJobs">
+        <ng-container *ngFor="let job of sortedJobs">
+            <app-job [job]="job" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 p-2"></app-job>
+        </ng-container>
+        <ng-container *ngIf="sortedJobs.length == 0">
+            <p *ngIf="isSeparate">There are currently no jobs matching your search criteria. Please try again later!</p>
+            <p *ngIf="!isSeparate">There are no job offers registered.</p>
+        </ng-container>
+        
     </ng-container>
 </div>

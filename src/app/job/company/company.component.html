@@ -26,11 +26,11 @@
                         </tr>
                         <tr *ngIf="company.phoneNumber">
                             <th scope="row">Phone number:</th>
-                            <td>{{ company.phoneNumber }}</td>
+                            <td><a [href]="'tel:' + company.phoneNumber">{{ company.phoneNumber }}</a></td>
                         </tr>
                         <tr *ngIf="company.mailAddress">
                             <th scope="row">Mail address:</th>
-                            <td>{{ company.mailAddress }}</td>
+                            <td><a [href]="'mailto:' + company.mailAddress">{{ company.mailAddress }}</a></td>
                         </tr>
                     </tbody>
                 </table>

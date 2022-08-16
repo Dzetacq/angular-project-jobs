@@ -3,7 +3,7 @@
   </div>
   <h1 *ngIf="isAdd">Adding job for {{ company.name }}</h1>
   <h1 *ngIf="isEdit">Editing job for {{ company.name }}</h1>
-  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="row gx-1" *ngIf="user.id == company.adminId">
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="row gx-1" *ngIf="user.id == company.adminId || user.isSuper">
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="name" name="name" placeholder="Name" 
             [(ngModel)]="job.name" #name="ngModel" required>

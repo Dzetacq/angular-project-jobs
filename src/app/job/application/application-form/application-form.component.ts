@@ -37,7 +37,12 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
       window.history.back();
     }
     if (this.appl.jobId) {
-      this.subs.push(this.jobService.getJobById(this.appl.jobId).subscribe(r => this.job = r));
+      this.subs.push(this.jobService.getJobById(this.appl.jobId).subscribe(r => {
+        this.job = r;
+        if (this.job.deadline && new Date(this.job.deadline).getTime() < new Date(new Date().toDateString()).getTime()) {
+          window.history.back();
+        }
+      }));
     }
   }
   

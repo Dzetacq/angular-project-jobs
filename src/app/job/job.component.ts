@@ -18,7 +18,7 @@ export class JobComponent implements OnInit, OnDestroy, OnChanges {
   @Input() isDetail: boolean = false;
   canApply: boolean = false;
   deadline: Date | null = null;
-  today: Date = new Date();
+  today: Date = new Date(new Date().toDateString());
   user: User = {id: "", userName: "", isAdmin: false, isSuper: false, companies: []}
   error: string = "";
   subs: Subscription[] = [];

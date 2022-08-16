@@ -106,6 +106,7 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   sorter(jobs: Job[]) : Job[] {
+    let today = new Date(new Date().toDateString()).getTime();
     switch (this.jobSort.sort) {
       case 0: //default
         jobs.sort((a, b) => {
@@ -114,7 +115,6 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
           }
           let aDate = new Date(a.deadline).getTime();
           let bDate = new Date(b.deadline).getTime();
-          let today = new Date().getTime();
           if (aDate < today ? bDate > today : bDate < today) {
             return aDate < today ? 1 : -1;
           }
@@ -123,7 +123,6 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
         break;
       case 1: // soonest first
         jobs.sort((a, b) => {
-          let today = new Date().getTime();
           let aDate = a.deadline != undefined ? new Date(a.deadline).getTime() : today;
           let bDate = b.deadline != undefined ? new Date(b.deadline).getTime() : today;
           if ((aDate < today || bDate < today)) {
@@ -137,7 +136,6 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
         break;
       case 2: //latest first
         jobs.sort((a, b) => {
-          let today = new Date().getTime();
           let aDate = a.deadline != undefined ? new Date(a.deadline).getTime() : today;
           let bDate = b.deadline != undefined ? new Date(b.deadline).getTime() : today;
           if (aDate < today ? bDate > today : bDate < today) {
@@ -153,7 +151,6 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
           }
           let aDate = new Date(a.deadline).getTime();
           let bDate = new Date(b.deadline).getTime();
-          let today = new Date().getTime();
           if (aDate < today ? bDate > today : bDate < today) {
             return aDate < today ? 1 : -1;
           }
@@ -167,7 +164,6 @@ export class JobOverviewComponent implements OnInit, OnDestroy, OnChanges {
           }
           let aDate = new Date(a.deadline).getTime();
           let bDate = new Date(b.deadline).getTime();
-          let today = new Date().getTime();
           if (aDate < today ? bDate > today : bDate < today) {
             return aDate < today ? -1 : 1;
           }

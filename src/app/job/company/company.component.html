@@ -35,10 +35,13 @@
                     </tbody>
                 </table>
             </ng-container>
-            <h2 type="button" data-bs-toggle="collapse" data-bs-target="#jobs">Job list</h2>
-            <div class="collapse show" id="jobs">
-                <app-job-overview [companyId]="company.id" [isSeparate]="false"></app-job-overview>
-            </div>
+            <ng-container *ngIf="(company.jobs && company.jobs.length > 0) || user.isSuper || user.id == company.adminId">
+                <h2 type="button" data-bs-toggle="collapse" data-bs-target="#jobs">Job list</h2>
+                <div class="collapse show" id="jobs">
+                    <app-job-overview [companyId]="company.id" [isSeparate]="false"></app-job-overview>
+                </div>
+            </ng-container>
+            
         </div>
     </div>
     <div class="modal fade" id="adminEdit" tabindex="-1">
